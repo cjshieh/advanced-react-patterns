@@ -12,6 +12,10 @@ function Toggle(props) {
   // 📜 https://reactjs.org/docs/react-api.html#reactchildren
   // 📜 https://reactjs.org/docs/react-api.html#cloneelement
   return React.Children.map(props.children, child => {
+    const isDOMElement = React.isValidElement(child) && typeof child.type === 'string';
+    if (isDOMElement) {
+      return React.cloneElement(child);
+    }
     return React.cloneElement(child, { on, toggle });
   })
 }
@@ -33,6 +37,7 @@ function App() {
       <Toggle>
         <ToggleOn>The button is on</ToggleOn>
         <ToggleOff>The button is off</ToggleOff>
+        <span>Hello</span>
         <ToggleButton />
       </Toggle>
     </div>
